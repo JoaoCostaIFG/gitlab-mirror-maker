@@ -57,7 +57,9 @@ def mirror_target_exists(github_repos, mirrors):
     """
 
     for mirror in mirrors:
-        if any(mirror['url'] and mirror['url'].endswith(f'{repo["full_name"]}.git') for repo in github_repos):
+        if not mirror['url']:
+            continue
+        if any(mirror['url'].lower().endswith(f'{repo["full_name"].lower()}.git') for repo in github_repos):
             return True
 
     return False

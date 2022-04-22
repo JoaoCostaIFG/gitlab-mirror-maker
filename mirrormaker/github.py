@@ -38,7 +38,7 @@ def repo_exists(github_repos, repo_slug):
      - True if repository exists, False otherwise.
     """
 
-    return any(repo['full_name'] == repo_slug for repo in github_repos)
+    return any(repo['full_name'].lower() == repo_slug.lower() for repo in github_repos)
 
 
 def create_repo(gitlab_repo):
