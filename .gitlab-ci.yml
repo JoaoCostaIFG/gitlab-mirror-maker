@@ -4,4 +4,4 @@ docker-build:
   services:
     - docker:dind
   script:
-    - docker run joaocostaifg/mirrormaker --gitlab-token "$GLABTOKEN" --github-token "$GHUBTOKEN"
+    - docker run joaocostaifg/gitlab-mirror-maker --gitlab-token "$GLABTOKEN" --github-token "$GHUBTOKEN"
