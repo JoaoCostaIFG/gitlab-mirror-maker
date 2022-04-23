@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import click
-import requests
 from tabulate import tabulate
 from . import __version__
 from . import gitlab
@@ -111,8 +110,8 @@ def print_summary_table(actions):
 
     for action in actions:
         row = [action["gitlab_repo"]["path_with_namespace"]]
-        row.append(missing) if action["create_github"] else row.append(created)
-        row.append(missing) if action["create_mirror"] else row.append(created)
+        row.append(missing if action["create_github"] else created)
+        row.append(missing if action["create_mirror"] else created)
         summary.append(row)
 
     summary.sort()
