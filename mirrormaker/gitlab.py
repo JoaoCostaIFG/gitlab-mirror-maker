@@ -1,7 +1,7 @@
 import requests
 
 # GitLab user authentication token
-token = ''
+token = ""
 
 
 def get_repos():
@@ -11,8 +11,10 @@ def get_repos():
      - List of public GitLab repositories.
     """
 
-    url = 'https://gitlab.com/api/v4/projects?visibility=public&owned=true&archived=false'
-    headers = {'Authorization': f'Bearer {token}'}
+    url = (
+        "https://gitlab.com/api/v4/projects?visibility=public&owned=true&archived=false"
+    )
+    headers = {"Authorization": f"Bearer {token}"}
 
     try:
         r = requests.get(url, headers=headers)
@@ -24,8 +26,8 @@ def get_repos():
 
 
 def get_user():
-    url = 'https://gitlab.com/api/v4/user'
-    headers = {'Authorization': f'Bearer {token}'}
+    url = "https://gitlab.com/api/v4/user"
+    headers = {"Authorization": f"Bearer {token}"}
 
     try:
         r = requests.get(url, headers=headers)
@@ -45,8 +47,8 @@ def get_repo_by_shorthand(shorthand):
 
     project_id = requests.utils.quote("/".join([namespace, project]), safe="")
 
-    url = f'https://gitlab.com/api/v4/projects/{project_id}'
-    headers = {'Authorization': f'Bearer {token}'}
+    url = f"https://gitlab.com/api/v4/projects/{project_id}"
+    headers = {"Authorization": f"Bearer {token}"}
 
     try:
         r = requests.get(url, headers=headers)
@@ -55,7 +57,6 @@ def get_repo_by_shorthand(shorthand):
         raise SystemExit(e)
 
     return r.json()
-
 
 
 def get_mirrors(gitlab_repo):
@@ -69,7 +70,7 @@ def get_mirrors(gitlab_repo):
     """
 
     url = f'https://gitlab.com/api/v4/projects/{gitlab_repo["id"]}/remote_mirrors'
-    headers = {'Authorization': f'Bearer {token}'}
+    headers = {"Authorization": f"Bearer {token}"}
 
     try:
         r = requests.get(url, headers=headers)
@@ -92,9 +93,12 @@ def mirror_target_exists(github_repos, mirrors):
     """
 
     for mirror in mirrors:
-        if not mirror['url']:
+        if not mirror["url"]:
             continue
-        if any(mirror['url'].lower().endswith(f'{repo["full_name"].lower()}.git') for repo in github_repos):
+        if any(
+            mirror["url"].lower().endswith(f'{repo["full_name"].lower()}.git')
+            for repo in github_repos
+        ):
             return True
 
     return False
@@ -103,7 +107,7 @@ def mirror_target_exists(github_repos, mirrors):
 def create_mirror(gitlab_repo, github_token, github_user):
     """Creates a push mirror of GitLab repository.
 
-    For more details see: 
+    For more details see:
     https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html#pushing-to-a-remote-repository-core
 
     Args:
@@ -116,15 +120,15 @@ def create_mirror(gitlab_repo, github_token, github_user):
     """
 
     url = f'https://gitlab.com/api/v4/projects/{gitlab_repo["id"]}/remote_mirrors'
-    headers = {'Authorization': f'Bearer {token}'}
+    headers = {"Authorization": f"Bearer {token}"}
 
     # If github-user is not provided use the gitlab username
     if not github_user:
-        github_user = gitlab_repo['owner']['username']
+        github_user = gitlab_repo["owner"]["username"]
 
     data = {
-        'url': f'https://{github_user}:{github_token}@github.com/{github_user}/{gitlab_repo["path"]}.git',
-        'enabled': True
+        "url": f'https://{github_user}:{github_token}@github.com/{github_user}/{gitlab_repo["path"]}.git',
+        "enabled": True,
     }
 
     try:

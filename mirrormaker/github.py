@@ -3,10 +3,10 @@ import sys
 from pprint import pprint
 
 # GitHub user authentication token
-token = ''
+token = ""
 
 # GitHub username (under this user namespace the mirrors will be created)
-user = ''
+user = ""
 
 
 def get_repos():
@@ -16,8 +16,8 @@ def get_repos():
      - List of public GitHub repositories.
     """
 
-    url = 'https://api.github.com/user/repos?type=public'
-    headers = {'Authorization': f'Bearer {token}'}
+    url = "https://api.github.com/user/repos?type=public"
+    headers = {"Authorization": f"Bearer {token}"}
 
     repos = []
     try:
@@ -31,7 +31,7 @@ def get_repos():
         raise SystemExit(e)
 
     # Return only non forked repositories
-    return [x for x in repos if not x['fork']]
+    return [x for x in repos if not x["fork"]]
 
 
 def repo_exists(github_repos, repo_slug):
@@ -45,7 +45,7 @@ def repo_exists(github_repos, repo_slug):
      - True if repository exists, False otherwise.
     """
 
-    return any(repo['full_name'].lower() == repo_slug.lower() for repo in github_repos)
+    return any(repo["full_name"].lower() == repo_slug.lower() for repo in github_repos)
 
 
 def create_repo(gitlab_repo):
@@ -58,16 +58,16 @@ def create_repo(gitlab_repo):
      - JSON representation of created GitHub repo.
     """
 
-    url = 'https://api.github.com/user/repos'
-    headers = {'Authorization': f'Bearer {token}'}
+    url = "https://api.github.com/user/repos"
+    headers = {"Authorization": f"Bearer {token}"}
 
     data = {
-        'name': gitlab_repo['path'],
-        'description': f'{gitlab_repo["description"]} [mirror]',
-        'homepage': gitlab_repo['web_url'],
-        'private': False,
-        'has_wiki': False,
-        'has_projects': False
+        "name": gitlab_repo["path"],
+        "description": f'{gitlab_repo["description"]} [mirror]',
+        "homepage": gitlab_repo["web_url"],
+        "private": False,
+        "has_wiki": False,
+        "has_projects": False,
     }
 
     try:
