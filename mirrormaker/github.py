@@ -30,8 +30,7 @@ def get_repos():
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
 
-    # Return only non forked repositories
-    return [x for x in repos if not x["fork"]]
+    return repos
 
 
 def repo_exists(github_repos, repo_slug):
