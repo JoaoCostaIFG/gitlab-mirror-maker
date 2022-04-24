@@ -16,13 +16,18 @@ def get_repos():
     )
     headers = {"Authorization": f"Bearer {token}"}
 
+    repos = []
     try:
-        r = requests.get(url, headers=headers)
-        r.raise_for_status()
+        while url:
+            r = requests.get(url, headers=headers)
+            r.raise_for_status()
+            repos.extend(r.json())
+            # handle pagination
+            url = r.links.get("next", {}).get("url", None)
     except requests.exceptions.RequestException as e:
         raise SystemExit(e)
 
-    return r.json()
+    return repos
 
 
 def get_user():
@@ -51,6 +56,7 @@ def get_repo_by_shorthand(shorthand):
     headers = {"Authorization": f"Bearer {token}"}
 
     try:
+        print("requestin")
         r = requests.get(url, headers=headers)
         r.raise_for_status()
     except requests.exceptions.RequestException as e:
