@@ -10,7 +10,8 @@ user = ""
 
 
 def get_repos():
-    """Finds all public GitHub repositories (which are not forks) of authenticated user.
+    """
+    Finds all public GitHub repositories (which are not forks) of authenticated user.
 
     Returns:
      - List of public GitHub repositories.
@@ -34,7 +35,8 @@ def get_repos():
 
 
 def repo_exists(github_repos, repo_slug):
-    """Checks if a repository with a given slug exists among the public GitHub repositories.
+    """
+    Checks if a repository with a given slug exists among the public GitHub repositories.
 
     Args:
      - github_repos: List of GitHub repositories.
@@ -48,7 +50,8 @@ def repo_exists(github_repos, repo_slug):
 
 
 def create_repo(gitlab_repo):
-    """Creates GitHub repository based on a metadata from given GitLab repository.
+    """
+    Creates GitHub repository based on a metadata from given GitLab repository.
 
     Args:
      - gitlab_repo: GitLab repository which metadata (ie. name, description etc.) is used to create the GitHub repo.

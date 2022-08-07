@@ -5,7 +5,8 @@ token = ""
 
 
 def get_repos():
-    """Finds all public GitLab repositories of authenticated user.
+    """
+    Finds all public GitLab repositories of authenticated user.
 
     Returns:
      - List of public GitLab repositories.
@@ -66,7 +67,8 @@ def get_repo_by_shorthand(shorthand):
 
 
 def get_mirrors(gitlab_repo):
-    """Finds all configured mirrors of GitLab repository.
+    """
+    Finds all configured mirrors of GitLab repository.
 
     Args:
      - gitlab_repo: GitLab repository.
@@ -88,7 +90,8 @@ def get_mirrors(gitlab_repo):
 
 
 def mirror_target_exists(github_repos, mirrors):
-    """Checks if any of the given mirrors points to any of the public GitHub repositories.
+    """
+    Checks if any of the given mirrors points to any of the public GitHub repositories.
 
     Args:
      - github_repos: List of GitHub repositories.
@@ -111,7 +114,8 @@ def mirror_target_exists(github_repos, mirrors):
 
 
 def create_mirror(gitlab_repo, github_token, github_user):
-    """Creates a push mirror of GitLab repository.
+    """
+    Creates a push mirror of GitLab repository.
 
     For more details see:
     https://docs.gitlab.com/ee/user/project/repository/repository_mirroring.html#pushing-to-a-remote-repository-core

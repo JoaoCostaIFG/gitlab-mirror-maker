@@ -82,7 +82,8 @@ def find_actions_to_perform(gitlab_repos, github_repos):
 
 
 def check_mirror_status(gitlab_repo, github_repos):
-    """Checks if given GitLab repository has a mirror created among the given GitHub repositories.
+    """
+    Checks if given GitLab repository has a mirror created among the given GitHub repositories.
 
     Args:
      - gitlab_repo: GitLab repository.
@@ -129,7 +130,8 @@ def print_summary_table(actions):
 
 
 def perform_actions(actions, dry_run):
-    """Creates GitHub repositories and configures GitLab mirrors where necessary.
+    """
+    Creates GitHub repositories and configures GitLab mirrors where necessary.
 
     Args:
      - actions: List of actions to perform, either creating GitHub repo and/or configuring GitLab mirror.
