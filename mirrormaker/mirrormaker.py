@@ -58,7 +58,8 @@ def mirrormaker(github_token, gitlab_token, github_user, dry_run, repo=None):
 
 
 def find_actions_to_perform(gitlab_repos, github_repos):
-    """Goes over provided repositories and figure out what needs to be done to create missing mirrors.
+    """
+    Goes over provided repositories and figure out what needs to be done to create missing mirrors.
 
     Args:
      - gitlab_repos: List of GitLab repositories.
