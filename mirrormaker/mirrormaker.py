@@ -72,16 +72,25 @@ def find_actions_to_perform(gitlab_repos, github_repos):
 
     actions = []
     with click.progressbar(
-        gitlab_repos, label="Checking mirrors status", show_eta=False
+        gitlab_repos, label="Checking GitLab mirrors status", show_eta=False
     ) as bar:
         for gitlab_repo in bar:
-            action = check_mirror_status(gitlab_repo, github_repos)
+            action = check_glab_mirror_status(gitlab_repo, github_repos)
             actions.append(action)
+
+    with click.progressbar(
+        github_repos, label="Checking GitHub mirrors status", show_eta=False
+    ) as bar:
+        for github_repo in bar:
+            action = check_ghub_mirror_status(github_repo, gitlab_repos)
+            if (action["create_gitlab"]):
+                print(action["github_repo"]["full_name"])
+            #actions.append(action)
 
     return actions
 
 
-def check_mirror_status(gitlab_repo, github_repos):
+def check_glab_mirror_status(gitlab_repo, github_repos):
     """
     Checks if given GitLab repository has a mirror created among the given GitHub repositories.
 
@@ -103,6 +112,26 @@ def check_mirror_status(gitlab_repo, github_repos):
 
     if github.repo_exists(github_repos, gitlab_repo["path_with_namespace"]):
         action["create_github"] = False
+
+    return action
+
+
+def check_ghub_mirror_status(github_repo, gitlab_repos):
+    """
+    Checks if given GitHub repository has a mirror created among the given GitLab repositories.
+
+    Args:
+     - github_repo: GitHub repository.
+     - gitlab_repos: List of GitLab repositories.
+
+    Returns:
+     - action: Action necessary to perform
+    """
+
+    action = {"github_repo": github_repo, "create_gitlab": True, "create_mirror": True}
+    if any(repo["path_with_namespace"].lower() == github_repo["full_name"].lower() for repo in gitlab_repos):
+        action["create_gitlab"] = False
+        action["create_mirror"] = False
 
     return action
 
